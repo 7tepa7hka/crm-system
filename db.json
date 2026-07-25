@@ -1,0 +1,121 @@
+{
+  "users": [
+    {
+      "firstName": "Ахмед",
+      "lastName": "Лоров",
+      "phone": "+998 90 939 99 79",
+      "group": "English A1",
+      "subject": "English",
+      "paid": true,
+      "id": "TVuejsLq18Y"
+    },
+    {
+      "firstName": "Курт",
+      "lastName": "Лоротор",
+      "phone": "+998 90 013 90 17",
+      "group": "English B1",
+      "subject": "English",
+      "paid": true,
+      "id": "C4Rm-h8HG2Q"
+    },
+    {
+      "firstName": "Наргиза",
+      "lastName": "Канаева",
+      "phone": "+998 90 027 09 98",
+      "group": "Mathematics A1",
+      "subject": "Mathematics",
+      "paid": false,
+      "id": "aBwj-J5hI3k"
+    },
+    {
+      "firstName": "Умид",
+      "lastName": "Устозов",
+      "phone": "+998 77 777 77 77",
+      "group": "Mathematics B2",
+      "subject": "Mathematics",
+      "paid": true,
+      "id": "gNimOiZQrz4"
+    },
+    {
+      "firstName": "Абдурашид",
+      "lastName": "Клаудов",
+      "phone": "+998 66 666 66 66",
+      "group": "Physics A2",
+      "subject": "Physics",
+      "paid": false,
+      "id": "W2QpUWCa9Xs"
+    },
+    {
+      "firstName": "Дамир",
+      "lastName": "Дамирович",
+      "phone": "+998 00 000 00 00",
+      "group": "IT A1",
+      "subject": "IT",
+      "paid": false,
+      "id": "Xjhz38f50yM"
+    },
+    {
+      "firstName": "Султан",
+      "lastName": "Канаев",
+      "phone": "+99 90 013 90 17",
+      "group": "Chemistry A1",
+      "subject": "Chemistry",
+      "paid": false,
+      "id": "-_bmKouDoKM"
+    },
+    {
+      "firstName": "Левый",
+      "lastName": "Чувак",
+      "phone": "Никто не знает",
+      "group": "History A1",
+      "subject": "History",
+      "paid": false,
+      "id": "zQtN9F09-UA"
+    }
+  ],
+  "lessons": [
+    {
+      "id": "1",
+      "name": "English",
+      "icon": "🇬🇧",
+      "studentsCount": 24
+    },
+    {
+      "id": "2",
+      "name": "Mathematics",
+      "icon": "➗",
+      "studentsCount": 18
+    },
+    {
+      "id": "3",
+      "name": "Physics",
+      "icon": "⚛",
+      "studentsCount": 15
+    },
+    {
+      "id": "4",
+      "name": "IT",
+      "icon": "💻",
+      "studentsCount": 21
+    },
+    {
+      "id": "5",
+      "name": "Chemistry",
+      "icon": "🧪",
+      "studentsCount": 12
+    },
+    {
+      "id": "6",
+      "name": "History",
+      "icon": "📚",
+      "studentsCount": 9
+    }
+  ],
+  "payments": [],
+  "settings": {
+    "adminName": "Sultan",
+    "password": "12345",
+    "version": "1.0.0"
+  },
+  "$schema": "./node_modules/json-server/schema.json"
+}
