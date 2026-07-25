@@ -48,8 +48,8 @@
   font-size: 16px;
 }
 
-.sidebar-label {
-  font-size: 14px;
+.sidebar-icon {
+  flex-shrink: 0;
 }
 
 .sidebar {

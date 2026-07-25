@@ -56,3 +56,37 @@
 .theme-toggle:active {
   transform: scale(0.92);
 }
+
+.navbar-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px 6px 6px;
+  border-radius: 30px;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  transition:
+    background-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.navbar-profile:hover {
+  background-color: var(--border-color);
+}
+
+.navbar-profile:active {
+  transform: scale(0.97);
+}
+
+.navbar-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.navbar-admin-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}

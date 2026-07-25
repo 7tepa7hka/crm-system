@@ -8,8 +8,16 @@ export async function getStatistics() {
   const unpaidCount = totalStudents - paidCount;
   const income = paidCount * 500000;
 
-  const groups = new Set(users.map((u) => u.group).filter(Boolean));
-  const groupsCount = groups.size;
+  const groupsMap = {};
+  users.forEach((u) => {
+    if (!u.group) return;
+    groupsMap[u.group] = (groupsMap[u.group] || 0) + 1;
+  });
+  const groupsBreakdown = Object.entries(groupsMap).map(([group, count]) => ({
+    group,
+    count,
+  }));
+  const groupsCount = groupsBreakdown.length;
 
   const paidPercent = totalStudents
     ? Math.round((paidCount / totalStudents) * 100)
@@ -24,6 +32,7 @@ export async function getStatistics() {
     unpaidCount,
     income,
     groupsCount,
+    groupsBreakdown,
     paidPercent,
     unpaidPercent,
   };
