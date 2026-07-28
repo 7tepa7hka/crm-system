@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
+import { X } from "lucide-react";
 import "./Modal.css";
 
 export function Modal({ isOpen, onClose, title, children }) {
@@ -18,7 +19,7 @@ export function Modal({ isOpen, onClose, title, children }) {
         <div className="modal-header">
           <h2 className="modal-title">{title}</h2>
           <button className="modal-close" onClick={onClose}>
-            ✕
+            <X size={16} />
           </button>
         </div>
         <div className="modal-body">{children}</div>

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../../context/AuthContext";
 import { useTheme } from "../../context/ThemeContext";
+import { useLanguage } from "../../context/LanguageContext";
 import { getSettings } from "../../services/settingsService";
 import logoLight from "../../assets/crm-sultan-light.png";
 import logoDark from "../../assets/crm-sultan-dark.png";
@@ -16,6 +17,7 @@ export function Login() {
   const [submitting, setSubmitting] = useState(false);
   const { login: authLogin } = useAuth();
   const { isDark } = useTheme();
+  const { t } = useLanguage();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -27,13 +29,13 @@ export function Login() {
 
       if (login === VALID_USERNAME && password === settings.password) {
         authLogin();
-        toast.success("Добро пожаловать в Sultan CRM!");
+        toast.success(t.login.welcome);
         navigate("/");
       } else {
-        toast.error("Неверный логин или пароль");
+        toast.error(t.login.invalidCredentials);
       }
     } catch {
-      toast.error("Ошибка соединения с сервером. Проверьте json-server.");
+      toast.error(t.login.connectionError);
     } finally {
       setSubmitting(false);
     }
@@ -47,12 +49,12 @@ export function Login() {
           alt="Sultan CRM System"
           className="login-logo"
         />
-        <h1 className="login-title">Sultan CRM System</h1>
-        <p className="login-subtitle">Войдите в систему управления</p>
+        <h1 className="login-title">{t.login.title}</h1>
+        <p className="login-subtitle">{t.login.subtitle}</p>
 
         <form className="login-form" onSubmit={handleSubmit}>
           <div className="login-field">
-            <label htmlFor="login">Login</label>
+            <label htmlFor="login">{t.login.loginLabel}</label>
             <input
               id="login"
               type="text"
@@ -64,7 +66,7 @@ export function Login() {
           </div>
 
           <div className="login-field">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">{t.login.passwordLabel}</label>
             <input
               id="password"
               type="password"
@@ -76,7 +78,7 @@ export function Login() {
           </div>
 
           <button type="submit" className="login-btn" disabled={submitting}>
-            {submitting ? "Проверка..." : "Sign In"}
+            {submitting ? t.login.checking : t.login.signIn}
           </button>
         </form>
       </div>

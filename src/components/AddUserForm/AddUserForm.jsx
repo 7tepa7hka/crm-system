@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { groups } from "../../data/groups";
+import { useLanguage } from "../../context/LanguageContext";
 import "./AddUserForm.css";
 
 const initialForm = { firstName: "", lastName: "", phone: "", group: "" };
@@ -7,6 +8,7 @@ const initialForm = { firstName: "", lastName: "", phone: "", group: "" };
 export function AddUserForm({ onSubmit, onCancel }) {
   const [form, setForm] = useState(initialForm);
   const [submitting, setSubmitting] = useState(false);
+  const { t } = useLanguage();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -35,31 +37,31 @@ export function AddUserForm({ onSubmit, onCancel }) {
   return (
     <form className="add-user-form" onSubmit={handleSubmit}>
       <div className="form-field">
-        <label htmlFor="firstName">Имя</label>
+        <label htmlFor="firstName">{t.users.firstName}</label>
         <input
           id="firstName"
           name="firstName"
           value={form.firstName}
           onChange={handleChange}
-          placeholder="Имя"
+          placeholder={t.users.firstName}
           required
         />
       </div>
 
       <div className="form-field">
-        <label htmlFor="lastName">Фамилия</label>
+        <label htmlFor="lastName">{t.users.lastName}</label>
         <input
           id="lastName"
           name="lastName"
           value={form.lastName}
           onChange={handleChange}
-          placeholder="Фамилия"
+          placeholder={t.users.lastName}
           required
         />
       </div>
 
       <div className="form-field">
-        <label htmlFor="phone">Телефон</label>
+        <label htmlFor="phone">{t.users.phone}</label>
         <input
           id="phone"
           name="phone"
@@ -71,7 +73,7 @@ export function AddUserForm({ onSubmit, onCancel }) {
       </div>
 
       <div className="form-field">
-        <label htmlFor="group">Группа</label>
+        <label htmlFor="group">{t.users.group}</label>
         <select
           id="group"
           name="group"
@@ -80,7 +82,7 @@ export function AddUserForm({ onSubmit, onCancel }) {
           required
         >
           <option value="" disabled>
-            Выберите группу
+            {t.users.selectGroup}
           </option>
           {groups.map((g) => (
             <option key={g.id} value={g.name}>
@@ -92,10 +94,10 @@ export function AddUserForm({ onSubmit, onCancel }) {
 
       <div className="form-actions">
         <button type="button" className="btn-secondary" onClick={onCancel}>
-          Отмена
+          {t.common.cancel}
         </button>
         <button type="submit" className="btn-primary" disabled={submitting}>
-          {submitting ? "Сохранение..." : "Добавить"}
+          {submitting ? t.common.saving : t.users.addUser}
         </button>
       </div>
     </form>

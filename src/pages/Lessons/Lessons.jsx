@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { useLessons } from "../../hooks/useLessons";
+import { useLanguage } from "../../context/LanguageContext";
 import { LessonCard } from "../../components/LessonCard/LessonCard";
 import { Modal } from "../../components/Modal/Modal";
 import { getStudentsBySubject } from "../../services/lessonsService";
+import { subjectIcons } from "../../data/subjectIcons";
+import { BookOpen } from "lucide-react";
 import "./Lessons.css";
 
 export function Lessons() {
   const { lessons, loading, error } = useLessons();
+  const { t } = useLanguage();
   const [selectedLesson, setSelectedLesson] = useState(null);
   const [students, setStudents] = useState([]);
   const [studentsLoading, setStudentsLoading] = useState(false);
@@ -29,22 +33,26 @@ export function Lessons() {
     setStudents([]);
   };
 
+  const selectedLabel = selectedLesson
+    ? t.subjects[selectedLesson.name] || selectedLesson.name
+    : "";
+
   return (
     <div className="lessons-page">
-      <h1 className="page-title">Lessons</h1>
-      <p className="page-subtitle">Предметы учебного центра и их ученики в филиале Eco Bozor</p>
+      <h1 className="page-title">{t.lessons.title}</h1>
+      <p className="page-subtitle">{t.lessons.subtitle}</p>
 
-      {loading && <p className="loading-text">Загрузка...</p>}
-      {error && <p className="error-text">Ошибка загрузки: {error}</p>}
+      {loading && <p className="loading-text">{t.common.loading}</p>}
+      {error && <p className="error-text">{t.common.error}</p>}
 
       {!loading && !error && (
         <div className="lessons-grid">
           {lessons.map((lesson) => (
             <LessonCard
               key={lesson.id}
-              icon={lesson.icon}
-              name={lesson.name}
-              studentsCount={lesson.studentsCount}
+              Icon={subjectIcons[lesson.name] || BookOpen}
+              name={t.subjects[lesson.name] || lesson.name}
+              studentsLabel={`${lesson.studentsCount} ${t.lessons.students}`}
               onClick={() => handleOpenLesson(lesson)}
             />
           ))}
@@ -54,16 +62,14 @@ export function Lessons() {
       <Modal
         isOpen={!!selectedLesson}
         onClose={handleClose}
-        title={
-          selectedLesson ? `${selectedLesson.icon} ${selectedLesson.name}` : ""
-        }
+        title={selectedLabel}
       >
         {studentsLoading && (
-          <p className="loading-text">Загрузка учеников...</p>
+          <p className="loading-text">{t.lessons.loadingStudents}</p>
         )}
 
         {!studentsLoading && students.length === 0 && (
-          <p className="empty-text">Пока нет учеников по этому предмету</p>
+          <p className="empty-text">{t.lessons.emptyStudents}</p>
         )}
 
         {!studentsLoading && students.length > 0 && (

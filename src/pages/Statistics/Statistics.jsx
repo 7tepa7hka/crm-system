@@ -11,20 +11,29 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from "recharts";
+import {
+  GraduationCap,
+  CheckCircle2,
+  XCircle,
+  Wallet,
+  Layers,
+} from "lucide-react";
 import { useStatistics } from "../../hooks/useStatistics";
+import { useLanguage } from "../../context/LanguageContext";
 import { StatCard } from "../../components/StatCard/StatCard";
 import { ProgressBar } from "../../components/ProgressBar/ProgressBar";
 import "./Statistics.css";
 
-const PIE_COLORS = ["#22c55e", "#ef4444"];
+const PIE_COLORS = ["#3a8a5c", "#a34747"];
 
 export function Statistics() {
   const { stats, loading, error } = useStatistics();
+  const { t } = useLanguage();
 
   const pieData = stats
     ? [
-        { name: "Оплачено", value: stats.paidCount },
-        { name: "Не оплачено", value: stats.unpaidCount },
+        { name: t.statistics.paid, value: stats.paidCount },
+        { name: t.statistics.unpaid, value: stats.unpaidCount },
       ]
     : [];
 
@@ -32,42 +41,42 @@ export function Statistics() {
 
   return (
     <div className="statistics-page">
-      <h1 className="page-title">Statistics</h1>
-      <p className="page-subtitle">Общая статистика учебного центра</p>
+      <h1 className="page-title">{t.statistics.title}</h1>
+      <p className="page-subtitle">{t.statistics.subtitle}</p>
 
-      {loading && <p className="loading-text">Загрузка...</p>}
-      {error && <p className="error-text">Ошибка загрузки: {error}</p>}
+      {loading && <p className="loading-text">{t.common.loading}</p>}
+      {error && <p className="error-text">{t.common.error}</p>}
 
       {!loading && !error && stats && (
         <>
           <div className="stats-grid">
             <StatCard
-              icon="🎓"
-              label="Общее количество учеников"
+              icon={GraduationCap}
+              label={t.statistics.totalStudents}
               value={stats.totalStudents}
               accent="blue"
             />
             <StatCard
-              icon="✅"
-              label="Количество оплат"
+              icon={CheckCircle2}
+              label={t.statistics.paidCount}
               value={stats.paidCount}
               accent="green"
             />
             <StatCard
-              icon="❌"
-              label="Количество неоплат"
+              icon={XCircle}
+              label={t.statistics.unpaidCount}
               value={stats.unpaidCount}
               accent="orange"
             />
             <StatCard
-              icon="💰"
-              label="Доход"
+              icon={Wallet}
+              label={t.statistics.income}
               value={`${stats.income.toLocaleString("ru-RU")} UZS`}
               accent="purple"
             />
             <StatCard
-              icon="👥"
-              label="Количество групп"
+              icon={Layers}
+              label={t.statistics.groupsCount}
               value={stats.groupsCount}
               accent="blue"
             />
@@ -75,7 +84,9 @@ export function Statistics() {
 
           <div className="charts-grid">
             <div className="chart-card">
-              <h2 className="section-title">Соотношение оплат</h2>
+              <h2 className="section-title">
+                {t.statistics.paymentsBreakdown}
+              </h2>
               <ResponsiveContainer width="100%" height={260}>
                 <PieChart>
                   <Pie
@@ -102,7 +113,7 @@ export function Statistics() {
             </div>
 
             <div className="chart-card">
-              <h2 className="section-title">Ученики по группам</h2>
+              <h2 className="section-title">{t.statistics.studentsByGroup}</h2>
               <ResponsiveContainer width="100%" height={260}>
                 <BarChart data={groupsBarData}>
                   <CartesianGrid
@@ -118,22 +129,22 @@ export function Statistics() {
                     tick={{ fontSize: 11, fill: "var(--text-secondary)" }}
                   />
                   <Tooltip />
-                  <Bar dataKey="count" fill="#5b5bf7" radius={[6, 6, 0, 0]} />
+                  <Bar dataKey="count" fill="#5a6b8c" radius={[6, 6, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
           </div>
 
           <div className="progress-section">
-            <h2 className="section-title">Прогресс оплат</h2>
+            <h2 className="section-title">{t.statistics.progressTitle}</h2>
             <div className="progress-list">
               <ProgressBar
-                label="Оплачено"
+                label={t.statistics.paid}
                 value={stats.paidPercent}
                 color="green"
               />
               <ProgressBar
-                label="Не оплачено"
+                label={t.statistics.unpaid}
                 value={stats.unpaidPercent}
                 color="red"
               />

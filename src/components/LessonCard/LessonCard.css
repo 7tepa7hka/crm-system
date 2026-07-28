@@ -21,7 +21,6 @@
 }
 
 .lesson-icon {
-  font-size: 32px;
   width: 56px;
   height: 56px;
   display: flex;
@@ -30,6 +29,7 @@
   background-color: var(--bg-secondary);
   border-radius: 12px;
   flex-shrink: 0;
+  color: var(--text-primary);
 }
 
 .lesson-info {
