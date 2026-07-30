@@ -47,6 +47,14 @@ export function useUsers() {
     return updated;
   };
 
+  const editUser = async (id, data) => {
+    const updated = await updateUser(id, data);
+    setUsers((prev) =>
+      prev.map((u) => (u.id === id ? { ...u, ...updated } : u)),
+    );
+    return updated;
+  };
+
   return {
     users,
     loading,
@@ -54,6 +62,7 @@ export function useUsers() {
     addUser,
     removeUser,
     togglePaid,
+    editUser,
     reload: loadUsers,
   };
 }

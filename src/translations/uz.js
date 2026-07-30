@@ -75,6 +75,13 @@ export const uz = {
     paidToast: (name) => `${name} toʻlagan deb belgilandi`,
     unpaidToast: (name) => `${name} toʻlamagan deb belgilandi`,
     paidToggleError: "Toʻlov holatini oʻzgartirib boʻlmadi",
+    filterAll: "Barchasi",
+    filterPaid: "Toʻlaganlar",
+    filterUnpaid: "Toʻlamaganlar",
+    edit: "Tahrirlash",
+    editModalTitle: "Foydalanuvchini tahrirlash",
+    updatedToast: "Foydalanuvchi maʼlumotlari yangilandi",
+    updateErrorToast: "Foydalanuvchi maʼlumotlarini yangilab boʻlmadi",
   },
   lessons: {
     title: "Fanlar",

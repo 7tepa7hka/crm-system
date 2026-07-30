@@ -1,22 +1,27 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { Pencil, Trash2 } from "lucide-react";
 import { useUsers } from "../../hooks/useUsers";
 import { useLanguage } from "../../context/LanguageContext";
 import { Badge } from "../../components/Badge/Badge";
 import { Modal } from "../../components/Modal/Modal";
 import { AddUserForm } from "../../components/AddUserForm/AddUserForm";
+import { EditUserForm } from "../../components/EditUserForm/EditUserForm";
 import "./Users.css";
 
 export function Users() {
-  const { users, loading, error, addUser, removeUser, togglePaid } = useUsers();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { users, loading, error, addUser, removeUser, togglePaid, editUser } =
+    useUsers();
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [editingUser, setEditingUser] = useState(null);
+  const [filter, setFilter] = useState("all");
   const { t } = useLanguage();
 
   const handleAddUser = async (formData) => {
     try {
       await addUser(formData);
       toast.success(t.users.addedToast);
-      setIsModalOpen(false);
+      setIsAddModalOpen(false);
     } catch {
       toast.error(t.users.addErrorToast);
     }
@@ -44,6 +49,22 @@ export function Users() {
     }
   };
 
+  const handleEditSubmit = async (formData) => {
+    try {
+      await editUser(editingUser.id, formData);
+      toast.success(t.users.updatedToast);
+      setEditingUser(null);
+    } catch {
+      toast.error(t.users.updateErrorToast);
+    }
+  };
+
+  const filteredUsers = users.filter((user) => {
+    if (filter === "paid") return user.paid;
+    if (filter === "unpaid") return !user.paid;
+    return true;
+  });
+
   return (
     <div className="users-page">
       <div className="users-header">
@@ -51,8 +72,29 @@ export function Users() {
           <h1 className="page-title">{t.users.title}</h1>
           <p className="page-subtitle">{t.users.subtitle}</p>
         </div>
-        <button className="btn-primary" onClick={() => setIsModalOpen(true)}>
+        <button className="btn-primary" onClick={() => setIsAddModalOpen(true)}>
           + {t.users.addUser}
+        </button>
+      </div>
+
+      <div className="users-filter-tabs">
+        <button
+          className={`filter-tab ${filter === "all" ? "filter-tab-active" : ""}`}
+          onClick={() => setFilter("all")}
+        >
+          {t.users.filterAll} ({users.length})
+        </button>
+        <button
+          className={`filter-tab ${filter === "paid" ? "filter-tab-active" : ""}`}
+          onClick={() => setFilter("paid")}
+        >
+          {t.users.filterPaid} ({users.filter((u) => u.paid).length})
+        </button>
+        <button
+          className={`filter-tab ${filter === "unpaid" ? "filter-tab-active" : ""}`}
+          onClick={() => setFilter("unpaid")}
+        >
+          {t.users.filterUnpaid} ({users.filter((u) => !u.paid).length})
         </button>
       </div>
 
@@ -69,11 +111,11 @@ export function Users() {
                 <th>{t.users.phone}</th>
                 <th>{t.users.group}</th>
                 <th>{t.users.paid}</th>
-                <th></th>
+                <th>{t.users.actions}</th>
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => (
+              {filteredUsers.map((user) => (
                 <tr key={user.id}>
                   <td>{user.firstName}</td>
                   <td>{user.lastName}</td>
@@ -88,36 +130,62 @@ export function Users() {
                     />
                   </td>
                   <td>
-                    <button
-                      className="delete-btn"
-                      onClick={() =>
-                        handleDelete(
-                          user.id,
-                          `${user.firstName} ${user.lastName}`,
-                        )
-                      }
-                    >
-                      {t.common.delete}
-                    </button>
+                    <div className="row-actions">
+                      <button
+                        className="edit-btn"
+                        onClick={() => setEditingUser(user)}
+                        title={t.users.edit}
+                      >
+                        <Pencil size={14} />
+                      </button>
+                      <button
+                        className="delete-btn"
+                        onClick={() =>
+                          handleDelete(
+                            user.id,
+                            `${user.firstName} ${user.lastName}`,
+                          )
+                        }
+                        title={t.common.delete}
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
 
-          {users.length === 0 && <p className="empty-text">{t.users.empty}</p>}
+          {filteredUsers.length === 0 && (
+            <p className="empty-text">{t.users.empty}</p>
+          )}
         </div>
       )}
 
       <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
         title={t.users.modalTitle}
       >
         <AddUserForm
           onSubmit={handleAddUser}
-          onCancel={() => setIsModalOpen(false)}
+          onCancel={() => setIsAddModalOpen(false)}
         />
+      </Modal>
+
+      <Modal
+        isOpen={!!editingUser}
+        onClose={() => setEditingUser(null)}
+        title={t.users.editModalTitle}
+      >
+        {editingUser && (
+          <EditUserForm
+            user={editingUser}
+            onSubmit={handleEditSubmit}
+            onCancel={() => setEditingUser(null)}
+          />
+        )}
       </Modal>
     </div>
   );

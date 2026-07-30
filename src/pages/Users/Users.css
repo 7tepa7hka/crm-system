@@ -8,7 +8,37 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
+}
+
+.users-filter-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.filter-tab {
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-card);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.filter-tab:hover {
+  background-color: var(--bg-secondary);
+}
+
+.filter-tab-active {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
 }
 
 .users-table-wrapper {
@@ -51,13 +81,41 @@
   background-color: var(--bg-secondary);
 }
 
+.row-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.edit-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.edit-btn:hover {
+  background-color: var(--border-color);
+  color: var(--text-primary);
+}
+
 .delete-btn {
-  padding: 7px 14px;
+  width: 30px;
+  height: 30px;
   border-radius: 8px;
   background-color: var(--danger-bg);
   color: var(--danger);
-  font-size: 12px;
-  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: opacity 0.2s ease;
 }
 
